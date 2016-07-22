@@ -264,7 +264,7 @@ public final class PSDImageReader extends ImageReaderBase {
         ImageTypeSpecifier rawType = getRawImageTypeInternal(imageIndex);
 
         ColorSpace cs = rawType.getColorModel().getColorSpace();
-        List<ImageTypeSpecifier> types = new ArrayList<>();
+        List<ImageTypeSpecifier> types = new ArrayList<ImageTypeSpecifier>();
 
         switch (header.mode) {
             case PSD.COLOR_MODE_GRAYSCALE:
@@ -554,9 +554,19 @@ public final class PSDImageReader extends ImageReaderBase {
             if (y >= pSource.y && y < pSource.y + pSource.height && y % pYSub == 0) {
                 if (pRLECompressed) {
 
-                    try (DataInputStream input = PSDUtil.createPackBitsStream(imageInput, length)) {
+                    DataInputStream input = null;
+                    try {
+                        input = PSDUtil.createPackBitsStream(imageInput, length);
                         for (int x = 0; x < pChannelWidth; x++) {
                             pRow[x] = input.readInt();
+                        }
+                    } finally {
+                        if (input != null) {
+                            try {
+                                input.close();
+                            } catch (IOException e) {
+
+                            }
                         }
                     }
                 }
@@ -612,9 +622,19 @@ public final class PSDImageReader extends ImageReaderBase {
             // Read entire line, if within source region and sampling
             if (y >= pSource.y && y < pSource.y + pSource.height && y % pYSub == 0) {
                 if (pRLECompressed) {
-                    try (DataInputStream input = PSDUtil.createPackBitsStream(imageInput, length)) {
+                    DataInputStream input = null;
+                    try {
+                        input = PSDUtil.createPackBitsStream(imageInput, length);
                         for (int x = 0; x < pChannelWidth; x++) {
                             pRow[x] = input.readShort();
+                        }
+                    } finally {
+                        if (input != null) {
+                            try {
+                                input.close();
+                            } catch (IOException e) {
+
+                            }
                         }
                     }
                 }
@@ -670,8 +690,18 @@ public final class PSDImageReader extends ImageReaderBase {
             // Read entire line, if within source region and sampling
             if (y >= pSource.y && y < pSource.y + pSource.height && y % pYSub == 0) {
                 if (pRLECompressed) {
-                    try (DataInputStream input = PSDUtil.createPackBitsStream(imageInput, length)) {
+                    DataInputStream input = null;
+                    try {
+                        input = PSDUtil.createPackBitsStream(imageInput, length);
                         input.readFully(pRow, 0, pChannelWidth);
+                    } finally {
+                        if (input != null) {
+                            try {
+                                input.close();
+                            } catch (IOException e) {
+
+                            }
+                        }
                     }
                 }
                 else {
@@ -725,8 +755,18 @@ public final class PSDImageReader extends ImageReaderBase {
             // Read entire line, if within source region and sampling
             if (y >= pSource.y && y < pSource.y + pSource.height && y % pYSub == 0) {
                 if (pRLECompressed) {
-                    try (DataInputStream input = PSDUtil.createPackBitsStream(imageInput, length)) {
+                    DataInputStream input = null;
+                    try {
+                        input = PSDUtil.createPackBitsStream(imageInput, length);
                         input.readFully(pRow, 0, pRow.length);
+                    } finally {
+                        if (input != null) {
+                            try {
+                                input.close();
+                            } catch (IOException e) {
+
+                            }
+                        }
                     }
                 }
                 else {
@@ -897,7 +937,7 @@ public final class PSDImageReader extends ImageReaderBase {
 
             if (pParseData && imageResourcesLength > 0) {
                 if (metadata.imageResources == null) {
-                    metadata.imageResources = new ArrayList<>();
+                    metadata.imageResources = new ArrayList<PSDImageResource>();
                     long expectedEnd = imageInput.getStreamPosition() + imageResourcesLength;
 
                     while (imageInput.getStreamPosition() < expectedEnd) {
@@ -1219,7 +1259,7 @@ public final class PSDImageReader extends ImageReaderBase {
         for (PSDImageResource resource : metadata.imageResources) {
             if (resource instanceof PSDThumbnail) {
                 if (thumbnails == null) {
-                    thumbnails = new ArrayList<>();
+                    thumbnails = new ArrayList<PSDThumbnail>();
                 }
 
                 thumbnails.add((PSDThumbnail) resource);

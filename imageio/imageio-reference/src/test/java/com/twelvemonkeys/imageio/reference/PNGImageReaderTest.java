@@ -28,7 +28,13 @@ public class PNGImageReaderTest extends ImageReaderAbstractTest {
         try {
             return (ImageReaderSpi) Class.forName("com.sun.imageio.plugins.png.PNGImageReaderSpi").newInstance();
         }
-        catch (InstantiationException | IllegalAccessException | ClassNotFoundException e) {
+        catch (InstantiationException e) {
+            assumeNoException(e);
+        }
+        catch (IllegalAccessException e) {
+            assumeNoException(e);
+        }
+        catch (ClassNotFoundException e) {
             assumeNoException(e);
         }
 

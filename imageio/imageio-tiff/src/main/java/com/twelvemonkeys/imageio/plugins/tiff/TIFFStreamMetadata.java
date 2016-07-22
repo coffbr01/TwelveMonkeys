@@ -106,14 +106,12 @@ public final class TIFFStreamMetadata extends IIOMetadata {
     }
 
     private ByteOrder getByteOrder(final String value) throws IIOInvalidTreeException {
-        switch (value) {
-            case "BIG_ENDIAN":
-                return ByteOrder.BIG_ENDIAN;
-            case "LITTLE_ENDIAN":
-                return ByteOrder.LITTLE_ENDIAN;
-            default:
-                return null;
+        if ("BIG_ENDIAN".equals(value)) {
+            return ByteOrder.BIG_ENDIAN;
+        } else if ("LITTLE_ENDIAN".equals(value)) {
+            return ByteOrder.LITTLE_ENDIAN;
         }
+        return null;
     }
 
     @Override

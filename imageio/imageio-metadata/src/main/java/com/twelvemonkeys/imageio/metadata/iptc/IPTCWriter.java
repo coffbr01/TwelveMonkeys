@@ -6,7 +6,6 @@ import com.twelvemonkeys.imageio.metadata.MetadataWriter;
 
 import javax.imageio.stream.ImageOutputStream;
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 
 import static com.twelvemonkeys.lang.Validate.notNull;
 
@@ -51,7 +50,7 @@ public final class IPTCWriter extends MetadataWriter {
 
     private void writeValue(final ImageOutputStream stream, final Object value) throws IOException {
         if (value instanceof String) {
-            byte[] data = ((String) value).getBytes(StandardCharsets.UTF_8);
+            byte[] data = ((String) value).getBytes("UTF-8");
             stream.writeShort(data.length);
             stream.write(data);
         }

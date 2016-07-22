@@ -1166,7 +1166,7 @@ public class JPEGImageReaderTest extends ImageReaderAbstractTest<JPEGImageReader
                     assertTrue(markerSequences.getLength() == 1 || markerSequences.getLength() == 2); // In case of JPEG encoded thumbnail, there will be 2
                     IIOMetadataNode markerSequence = (IIOMetadataNode) markerSequences.item(0);
                     assertNotNull(markerSequence);
-                    assertThat(markerSequence.getChildNodes().getLength(), new GreaterThan<>(0));
+                    assertThat(markerSequence.getChildNodes().getLength(), new GreaterThan<Integer>(0));
 
                     NodeList unknowns = markerSequence.getElementsByTagName("unknown");
                     for (int j = 0; j < unknowns.getLength(); j++) {
@@ -1356,7 +1356,7 @@ public class JPEGImageReaderTest extends ImageReaderAbstractTest<JPEGImageReader
     }
 
     private List<IIOMetadataNode> sortNodes(final NodeList nodes) {
-        ArrayList<IIOMetadataNode> sortedNodes = new ArrayList<>(new AbstractList<IIOMetadataNode>() {
+        ArrayList<IIOMetadataNode> sortedNodes = new ArrayList<IIOMetadataNode>(new AbstractList<IIOMetadataNode>() {
             @Override
             public IIOMetadataNode get(int index) {
                 return (IIOMetadataNode) nodes.item(index);

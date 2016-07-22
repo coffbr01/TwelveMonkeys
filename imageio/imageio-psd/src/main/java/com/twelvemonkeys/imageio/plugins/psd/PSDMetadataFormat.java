@@ -261,7 +261,7 @@ public final class PSDMetadataFormat extends IIOMetadataFormatImpl {
     }
 
     private static <T> List<T> asListNoNulls(final T[] values) {
-        List<T> list = new ArrayList<>(values.length);
+        List<T> list = new ArrayList<T>(values.length);
 
         for (T value : values) {
             if (value != null) {

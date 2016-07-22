@@ -65,17 +65,24 @@
                 <role>contributor</role>
             </roles>
         </contributor>
+        <contributor>
+            <name>Brien Coffield</name>
+            <email>coffbr01@gmail.com</email>
+            <roles>
+                <role>contributer</role>
+            </roles>
+        </contributor>
     </contributors>
 
     <issueManagement>
         <system>GitHub</system>
-        <url>https://github.com/haraldk/TwelveMonkeys/issues</url>
+        <url>https://github.com/coffbr01/TwelveMonkeysJDK6/issues</url>
     </issueManagement>
 
     <scm>
-        <connection>scm:git:https://github.com/haraldk/TwelveMonkeys</connection>
-        <developerConnection>scm:git:https://github.com/haraldk/TwelveMonkeys</developerConnection>
-        <url>https://github.com/haraldk/TwelveMonkeys</url>
+        <connection>scm:git:https://github.com/coffbr01/TwelveMonkeysJDK6</connection>
+        <developerConnection>scm:git:https://github.com/coffbr01/TwelveMonkeysJDK6</developerConnection>
+        <url>https://github.com/coffbr01/TwelveMonkeysJDK6</url>
         <tag>HEAD</tag>
     </scm>
 
@@ -159,8 +166,8 @@
                     <version>3.3</version>
                     <inherited>true</inherited>
                     <configuration>
-                        <source>1.7</source>
-                        <target>1.7</target>
+                        <source>1.6</source>
+                        <target>1.6</target>
                         <showDeprecation>false</showDeprecation>
                         <debuglevel>source,lines</debuglevel>
                         <compilerArguments>
@@ -223,7 +230,7 @@
                 <artifactId>maven-pmd-plugin</artifactId>
                 <version>3.4</version>
                 <configuration>
-                    <targetJdk>1.7</targetJdk>
+                    <targetJdk>1.6</targetJdk>
                 </configuration>
             </plugin>
             <plugin>

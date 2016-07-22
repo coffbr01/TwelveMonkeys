@@ -107,7 +107,7 @@ public class TIFFUtilities {
      */
     public static List<File> split(File inputFile, File outputDirectory) throws IOException {
         ImageInputStream input = null;
-        List<File> outputFiles = new ArrayList<>();
+        List<File> outputFiles = new ArrayList<File>();
         try {
             input = ImageIO.createImageInputStream(inputFile);
             List<TIFFPage> pages = getPages(input);
@@ -464,7 +464,7 @@ public class TIFFUtilities {
             Validate.isTrue(degree % 90 == 0 && degree > 0 && degree < 360,
                     "Only rotations by 90, 180 and 270 degree are supported");
 
-            ArrayList<Entry> newIDFData = new ArrayList<>();
+            ArrayList<Entry> newIDFData = new ArrayList<Entry>();
             Iterator<Entry> it = IFD.iterator();
             while (it.hasNext()) {
                 newIDFData.add(it.next());

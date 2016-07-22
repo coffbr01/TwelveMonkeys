@@ -40,7 +40,6 @@ import java.io.IOException;
 import java.lang.reflect.Array;
 import java.nio.ByteOrder;
 import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
 import java.util.*;
 
 /**
@@ -188,7 +187,7 @@ public final class EXIFWriter extends MetadataWriter {
 
     private Directory ensureOrderedDirectory(final Directory directory) {
         if (!isSorted(directory)) {
-            List<Entry> entries = new ArrayList<>(directory.size());
+            List<Entry> entries = new ArrayList<Entry>(directory.size());
 
             for (Entry entry : directory) {
                 entries.add(entry);
@@ -363,7 +362,7 @@ public final class EXIFWriter extends MetadataWriter {
                     stream.writeByte(((Number) value).intValue());
                     break;
                 case TIFF.TYPE_ASCII:
-                    byte[] bytes = ((String) value).getBytes(StandardCharsets.UTF_8);
+                    byte[] bytes = ((String) value).getBytes("UTF-8");
                     stream.write(bytes);
                     stream.write(0);
                     break;

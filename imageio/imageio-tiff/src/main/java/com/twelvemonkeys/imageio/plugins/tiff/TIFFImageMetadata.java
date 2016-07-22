@@ -915,7 +915,7 @@ public final class TIFFImageMetadata extends AbstractMetadata {
         super.mergeTree(formatName, root);
 
         // Set by "merging" with empty map
-        LinkedHashMap<Integer, Entry> entries = new LinkedHashMap<>();
+        LinkedHashMap<Integer, Entry> entries = new LinkedHashMap<Integer, Entry>();
         mergeEntries(formatName, root, entries);
 
         // TODO: Consistency validation?
@@ -930,7 +930,7 @@ public final class TIFFImageMetadata extends AbstractMetadata {
         super.mergeTree(formatName, root);
 
         // Clone entries (shallow clone, as entries themselves are immutable)
-        LinkedHashMap<Integer, Entry> entries = new LinkedHashMap<>(ifd.size() + 10);
+        LinkedHashMap<Integer, Entry> entries = new LinkedHashMap<Integer, Entry>(ifd.size() + 10);
 
         for (Entry entry : ifd) {
             entries.put((Integer) entry.getIdentifier(), entry);
@@ -1141,7 +1141,7 @@ public final class TIFFImageMetadata extends AbstractMetadata {
             throw new IIOInvalidTreeException("Expected \"TIFFIFD\" node", ifdNode);
         }
 
-        List<Entry> entries = new ArrayList<>();
+        List<Entry> entries = new ArrayList<Entry>();
         NodeList nodes = ifdNode.getChildNodes();
 
         for (int i = 0; i < nodes.getLength(); i++) {

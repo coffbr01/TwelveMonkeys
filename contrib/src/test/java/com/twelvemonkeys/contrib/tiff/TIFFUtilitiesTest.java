@@ -46,7 +46,6 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
-import java.nio.file.Files;
 import java.util.Arrays;
 import java.util.List;
 
@@ -108,7 +107,9 @@ public class TIFFUtilitiesTest {
         FileUtil.write(inputFile, data);
         inputStream.close();
 
-        File outputDirectory = Files.createTempDirectory("imageio").toFile();
+        File outputDirectory = File.createTempFile("imageio", null);
+        outputDirectory.delete();
+        outputDirectory.mkdir();
 
         TIFFUtilities.split(inputFile, outputDirectory);
 

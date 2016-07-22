@@ -93,7 +93,7 @@ public final class TGAImageReader extends ImageReaderBase {
     public Iterator<ImageTypeSpecifier> getImageTypes(final int imageIndex) throws IOException {
         ImageTypeSpecifier rawType = getRawImageType(imageIndex);
 
-        List<ImageTypeSpecifier> specifiers = new ArrayList<>();
+        List<ImageTypeSpecifier> specifiers = new ArrayList<ImageTypeSpecifier>();
 
         // TODO: Implement
         specifiers.add(rawType);

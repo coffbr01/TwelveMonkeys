@@ -73,8 +73,8 @@ abstract class DIBImageReader extends ImageReaderBase {
     private Directory directory;
 
     // TODO: Review these, make sure we don't have a memory leak
-    private Map<DirectoryEntry, DIBHeader> headers = new WeakHashMap<>();
-    private Map<DirectoryEntry, BitmapDescriptor> descriptors = new WeakWeakMap<>();
+    private Map<DirectoryEntry, DIBHeader> headers = new WeakHashMap<DirectoryEntry, DIBHeader>();
+    private Map<DirectoryEntry, BitmapDescriptor> descriptors = new WeakWeakMap<DirectoryEntry, BitmapDescriptor>();
 
     private ImageReader pngImageReader;
 
@@ -102,7 +102,7 @@ abstract class DIBImageReader extends ImageReaderBase {
             return getImageTypesPNG(entry);
         }
 
-        List<ImageTypeSpecifier> types = new ArrayList<>();
+        List<ImageTypeSpecifier> types = new ArrayList<ImageTypeSpecifier>();
         DIBHeader header = getHeader(entry);
 
         // Use data from header to create specifier

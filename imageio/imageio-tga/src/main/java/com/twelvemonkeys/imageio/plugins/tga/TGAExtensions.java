@@ -3,7 +3,7 @@ package com.twelvemonkeys.imageio.plugins.tga;
 import javax.imageio.IIOException;
 import javax.imageio.stream.ImageInputStream;
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
+import java.nio.charset.Charset;
 import java.util.Calendar;
 
 /**
@@ -131,7 +131,8 @@ final class TGAExtensions {
             }
         }
 
-        return new String(data, 0, len, StandardCharsets.US_ASCII);
+        Charset charset = Charset.forName("ISO646-US");
+        return new String(data, 0, len, charset);
     }
 
     public boolean hasAlpha() {

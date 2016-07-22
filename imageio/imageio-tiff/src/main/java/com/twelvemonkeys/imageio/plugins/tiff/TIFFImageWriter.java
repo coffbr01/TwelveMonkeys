@@ -241,7 +241,7 @@ public final class TIFFImageWriter extends ImageWriterBase {
 
         // TODO: There shouldn't be necessary to create a separate map here, this should be handled in the
         // convertImageMetadata/getDefaultImageMetadata methods....
-        Map<Integer, Entry> entries = new LinkedHashMap<>();
+        Map<Integer, Entry> entries = new LinkedHashMap<Integer, Entry>();
         entries.put(TIFF.TAG_IMAGE_WIDTH, new TIFFEntry(TIFF.TAG_IMAGE_WIDTH, renderedImage.getWidth()));
         entries.put(TIFF.TAG_IMAGE_HEIGHT, new TIFFEntry(TIFF.TAG_IMAGE_HEIGHT, renderedImage.getHeight()));
         entries.put(TIFF.TAG_ORIENTATION, new TIFFEntry(TIFF.TAG_ORIENTATION, 1)); // (optional)
@@ -262,7 +262,12 @@ public final class TIFFImageWriter extends ImageWriterBase {
         int compression;
         if ((param == null || param.getCompressionMode() == TIFFImageWriteParam.MODE_COPY_FROM_METADATA)
                 && image.getMetadata() != null && metadata.getIFD().getEntryById(TIFF.TAG_COMPRESSION) != null) {
-            compression = (int) metadata.getIFD().getEntryById(TIFF.TAG_COMPRESSION).getValue();
+            Object theInt = metadata.getIFD().getEntryById(TIFF.TAG_COMPRESSION).getValue();
+            if (theInt instanceof Integer) {
+                compression = (Integer)theInt;
+            } else {
+                throw new RuntimeException(theInt.toString() + " is not an integer");
+            }
         }
         else {
             compression = TIFFImageWriteParam.getCompressionType(param);
@@ -519,7 +524,13 @@ public final class TIFFImageWriter extends ImageWriterBase {
 
         // Use predictor by default for LZW and ZLib/Deflate
         // TODO: Unless explicitly disabled in TIFFImageWriteParam
-        int compression = (int) entries.get(TIFF.TAG_COMPRESSION).getValue();
+        Object theInt = entries.get(TIFF.TAG_COMPRESSION).getValue();
+        int compression;
+        if (theInt instanceof Integer) {
+            compression = (Integer)theInt;
+        } else {
+            throw new RuntimeException(theInt.toString() + " is not an integer");
+        }
         OutputStream stream;
 
         switch (compression) {
@@ -575,11 +586,22 @@ public final class TIFFImageWriter extends ImageWriterBase {
                 long option = 0L;
 
                 if (compression != TIFFBaseline.COMPRESSION_CCITT_MODIFIED_HUFFMAN_RLE) {
-                    option = (long) entries.get(compression == TIFFExtension.COMPRESSION_CCITT_T4 ? TIFF.TAG_GROUP3OPTIONS : TIFF.TAG_GROUP4OPTIONS).getValue();
+                    Object theLong = entries.get(compression == TIFFExtension.COMPRESSION_CCITT_T4 ? TIFF.TAG_GROUP3OPTIONS : TIFF.TAG_GROUP4OPTIONS).getValue();
+                    if (theLong instanceof Long) {
+                        option = (Long)theLong;
+                    } else {
+                        throw new RuntimeException(theLong.toString() + " is not a long");
+                    }
                 }
 
                 Entry fillOrderEntry = entries.get(TIFF.TAG_FILL_ORDER);
-                int fillOrder = (int) (fillOrderEntry != null ? fillOrderEntry.getValue() : TIFFBaseline.FILL_LEFT_TO_RIGHT);
+                theInt = (fillOrderEntry != null ? fillOrderEntry.getValue() : TIFFBaseline.FILL_LEFT_TO_RIGHT);
+                int fillOrder;
+                if (theInt instanceof Integer) {
+                    fillOrder = (Integer)theInt;
+                } else {
+                    throw new RuntimeException(theInt + " is not an integer");
+                }
                 stream = IIOUtil.createStreamAdapter(imageOutput);
                 stream = new CCITTFaxEncoderStream(stream, image.getTileWidth(), image.getTileHeight(), compression, fillOrder, option);
 
@@ -910,7 +932,7 @@ public final class TIFFImageWriter extends ImageWriterBase {
     private TIFFImageMetadata initMeta(final Directory ifd, final ImageTypeSpecifier imageType, final ImageWriteParam param) {
         Validate.notNull(imageType, "imageType");
 
-        Map<Integer, Entry> entries = new LinkedHashMap<>(ifd != null ? ifd.size() + 10 : 20);
+        Map<Integer, Entry> entries = new LinkedHashMap<Integer, Entry>(ifd != null ? ifd.size() + 10 : 20);
 
         if (ifd != null) {
             for (Entry entry : ifd) {
